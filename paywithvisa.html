@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+</head>
+<body>
+    <main>
+        <form class="payment-form">
+  <label for="cardType">Card Type:</label>
+  <select id="cardType" required>
+    <option value="">-- Select --</option>
+    <option value="visa">Visa</option>
+    <option value="mastercard">MasterCard</option>
+  </select>
+
+  <label for="cardNumber">Card Number:</label>
+  <input type="text" id="cardNumber" maxlength="16" pattern="\d{16}" placeholder="1234 5678 9012 3456" required>
+
+  <label for="expMonth">Expiration Month:</label>
+  <input type="text" id="expMonth" maxlength="2" pattern="\d{2}" placeholder="MM" required>
+
+  <label for="expYear">Expiration Year:</label>
+  <input type="text" id="expYear" maxlength="2" pattern="\d{2}" placeholder="YY" required>
+
+  <label for="cvn">CVN:</label>
+  <input type="text" id="cvn" maxlength="4" pattern="\d{3,4}" placeholder="123" required>
+
+  <button type="submit">Submit Payment</button>
+</form>
+    </main>
+    <script>
+  document.querySelector('.payment-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    const cardType = document.getElementById('cardType').value;
+    const cardNumber = document.getElementById('cardNumber').value;
+    const expMonth = document.getElementById('expMonth').value;
+    const expYear = document.getElementById('expYear').value;
+    const cvn = document.getElementById('cvn').value;
+
+    // Simple validations
+    if (!cardType || !/^(visa|mastercard)$/.test(cardType)) {
+      alert("Please select a valid card type.");
+      return;
+    }
+
+    if (!/^[0-9]{16}$/.test(cardNumber)) {
+      alert("Card number must be exactly 16 digits.");
+      return;
+    }
+
+    if (!/^(0[1-9]|1[0-2])$/.test(expMonth)) {
+      alert("Enter a valid expiration month (01 to 12).");
+      return;
+    }
+
+    if (!/^[0-9]{2}$/.test(expYear)) {
+      alert("Enter a valid 2-digit expiration year.");
+      return;
+    }
+
+    if (!/^[0-9]{3,4}$/.test(cvn)) {
+      alert("CVN must be 3 or 4 digits.");
+      return;
+    }
+
+    // If all passed
+    alert("✅ Payment Successful! Thank you for your order.");
+    this.reset(); // Clear the form
+  });
+</script>
+</body>
+</html>
